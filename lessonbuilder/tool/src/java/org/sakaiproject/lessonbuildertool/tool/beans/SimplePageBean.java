@@ -8040,7 +8040,7 @@ public class SimplePageBean {
 		String status = "success";
 		String divHeight = "height:" + announcementsHeight +"px;";
 		//saving numberOfAnnouncements and height , used later in edit screen.
-		String html = "<div align=\"left\" style='"+divHeight+"' class=\"announcements-div\"><input type=\"hidden\" id=\"numberOfAnnouncements\" value='"+announcementsDropdown+"'/></div>";
+		String html = "<div align=\"left\" style='"+divHeight+"' class=\"announcements-div\"></div>";
 		if (canEditPage()) {
 			SimplePageItem item;
 			if (itemId != null && itemId != -1) {
@@ -8053,6 +8053,7 @@ public class SimplePageBean {
 			item.setHtml(html);
 			//setting height in the item attribute
 			item.setAttribute("height", announcementsHeight);
+			item.setAttribute("numberOfAnnouncements", announcementsDropdown);
 			item.setPrerequisite(this.prerequisite);
 			setItemGroups(item, selectedGroups);
 			update(item);

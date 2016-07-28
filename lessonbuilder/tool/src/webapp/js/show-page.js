@@ -301,8 +301,8 @@ $(document).ready(function() {
 		});
 		$('#add-announcements-dialog').dialog({
 			autoOpen: false,
-			width: 700,
-			modal: false,
+			width: modalDialogWidth(),
+			modal: true,
 			resizable: false,
 			draggable: false
 		});
@@ -373,6 +373,7 @@ $(document).ready(function() {
 		    });
 
 		$('.announcements-link').click(function(){
+			oldloc = $(this);
 			closeDropdowns();
 			$('li').removeClass('editInProgress');
 			var position =  $(this).position();
@@ -380,21 +381,20 @@ $(document).ready(function() {
 			$("#announcementsEditId").val("-1");
 			$("#announcements-height").val("");
 			$("#announcementsNumberDropdown-selection").val("5");
-			$("#add-announcements-dialog").dialog("option", "position", [position.left, position.top]);
-			oldloc = $(this);
 			$("#add-announcements-dialog").dialog("open");
-			checksize($("#add-announcements-dialog"));
+			setupdialog($("#add-announcements-dialog"));
 			return false;
 		});
 
 		$(".edit-announcements").click(function(){
+			oldloc = $(this);
 			closeDropdowns();
 			var row = $(this).closest('li');
 			var itemId = row.find(".announcementsId").text();
 			$('#announcementsEditId').val(itemId);
 			var height = row.find(".announcementsWidgetHeight").text().replace(/'/g,"");
 			$('#announcements-height').val(height);
-			var number = row.find("#numberOfAnnouncements").val();
+			var number = row.find(".numberOfAnnouncements").text();
 			$("#announcementsNumberDropdown-selection").val(number);
 			$('.edit-col').addClass('edit-colHidden');
 			$(this).closest('li').addClass('editInProgress');
@@ -403,11 +403,8 @@ $(document).ready(function() {
 			$("#announcements-add-item").attr("value", msg("simplepage.edit"));
 			//display delete link
 			$("#announcements-delete-span").show();
-			var position = row.position();
-			$("#add-announcements-dialog").dialog("option", "position", [position.left, position.top]);
-			oldloc = $(this);
 			$('#add-announcements-dialog').dialog('open');
-			checksize($("#add-announcements-dialog"));
+			setupdialog($("#add-announcements-dialog"));
 			return false;
 		});
 		$('#import-cc').click(function(){
@@ -632,7 +629,6 @@ $(document).ready(function() {
 		//		}
 		//		return true;
 			$("#add-forum-summary-dialog").dialog("option", "width", outerWidth-10);
-			$("#add-announcements-dialog").dialog("option", "width", outerWidth-10);
 			$("#add-twitter-dialog").dialog("option", "width", outerWidth-10);
 		//	});
 
